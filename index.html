@@ -14,10 +14,10 @@
     <div id="action">
       <button class="button all">All Tweets</button>
       <button class="button new">New Tweets</button>
-      <button class="button shawn">@shawndrost</button>
+<!--       <button class="button shawn">@shawndrost</button>
       <button class="button sharks">@sharksforcheap</button>
       <button class="button mracus">@mracus</button>
-      <button class="button douglas">@douglascalhoun</button>
+      <button class="button douglas">@douglascalhoun</button> -->
     </div>
 
     <div class="tweetBox">
@@ -75,26 +75,30 @@
           $('.tweets').show();
         });
 
-        var $mracus = $('.mracus');
-        $mracus.on('click', function(){
+        //var $mracus = $('.mracus');
+        $('#messages').on('click', '.mracus', function(event){
+          event.preventDefault();
           $('.tweets').hide();
           $('.mracus').show();
         });
 
-        var $shawn = $('.shawndrost, .shawn');
-        $shawn.on('click', function(){
+        //var $shawn = $('.shawndrost, .shawn');
+        $('#messages').on('click', '.shawndrost', function(event){
+          event.preventDefault();
           $('.tweets').hide();
           $('.shawndrost').show();
         });
 
-        var $sharks = $('.sharksforcheap, .sharks');
-        $sharks.on('click', function(){
+        //var $sharks = $('.sharksforcheap, .sharks');
+        $('#messages').on('click', '.sharksforcheap', function(event){
+          event.preventDefault();
           $('.tweets').hide();
           $('.sharksforcheap').show();
         });
 
-        var $douglas = $('.douglascalhoun, .douglas');
-        $douglas.on('click', function(){
+        //var $douglas = $('.douglascalhoun, .douglas');
+        $('#messages').on('click', '.douglascalhoun', function(event){
+          event.preventDefault();
           $('.tweets').hide();
           $('.douglascalhoun').show();
         });
