@@ -11,31 +11,55 @@
       <h1>Twittler</h1>
     </div>
 
+    <div id="action">
+      <button class="button">Show New Tweets</button>
+    </div>
+
+    <div class="tweets">
+      <div id="messages"></div>
+    </div>
+
     <script>
 
       $(document).ready(function(){
+
+        var displayTweet = function(message){
+            var tweet;
+            if(message === 'original'){
+              tweet = streams.home[index];
+            }
+
+            else{
+
+              var tweet = streams.home[streams.home.length - 1];
+            }
+
+            var $tweet = $('<div></div>');
+            $tweet.addClass('style tweets');
+            $tweet.prependTo('#messages');
+
+            var $user = $('<h3 class="user"></h3>');
+            $user.text('@' + tweet.user);
+            $user.appendTo($tweet);
+
+            var $message = $('<p class="message"></p>');
+            $message.text(tweet.message);
+            $message.appendTo($tweet);
+        };
+
         var $body = $('body');
-        //$body.html('');
 
         var index = streams.home.length - 1;
         while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.addClass('style tweets');
-
-          //$tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-
-          var $user = $('<h3 class="user"></h3>');
-          $user.text('@' + tweet.user);
-          $user.appendTo($tweet);
-
-          var $message = $('<p class="message"></p>');
-          $message.text(tweet.message);
-          $message.appendTo($tweet);
-
-          index -= 1;
+            displayTweet('original');
+            index -= 1;
         }
+
+        var $button = $('.button');
+        $button.on('click', function(){
+          generateRandomTweet();
+          displayTweet();
+        });
 
       });
 
