@@ -12,10 +12,15 @@
     </div>
 
     <div id="action">
-      <button class="button">Show New Tweets</button>
+      <button class="button all">All Tweets</button>
+      <button class="button new">New Tweets</button>
+      <button class="button shawn">@shawndrost</button>
+      <button class="button sharks">@sharksforcheap</button>
+      <button class="button mracus">@mracus</button>
+      <button class="button douglas">@douglascalhoun</button>
     </div>
 
-    <div class="tweets">
+    <div class="tweetBox">
       <div id="messages"></div>
     </div>
 
@@ -41,6 +46,7 @@
             var $user = $('<h3 class="user"></h3>');
             $user.text('@' + tweet.user);
             $user.appendTo($tweet);
+            $tweet.addClass(tweet.user.toString());
 
             var $message = $('<p class="message"></p>');
             $message.text(tweet.message);
@@ -57,17 +63,47 @@
             index -= 1;
         }
 
-        var $button = $('.button');
-        $button.on('click', function(){
+        var $newTweet = $('.new');
+        $newTweet.on('click', function(){
           generateRandomTweet();
           displayTweet();
+          $('.tweets').show();
         });
 
-        window.setInterval(function(){
+        var $all = $('.all');
+        $all.on('click', function(){
+          $('.tweets').show();
+        });
+
+        var $mracus = $('.mracus');
+        $mracus.on('click', function(){
+          $('.tweets').hide();
+          $('.mracus').show();
+        });
+
+        var $shawn = $('.shawndrost, .shawn');
+        $shawn.on('click', function(){
+          $('.tweets').hide();
+          $('.shawndrost').show();
+        });
+
+        var $sharks = $('.sharksforcheap, .sharks');
+        $sharks.on('click', function(){
+          $('.tweets').hide();
+          $('.sharksforcheap').show();
+        });
+
+        var $douglas = $('.douglascalhoun, .douglas');
+        $douglas.on('click', function(){
+          $('.tweets').hide();
+          $('.douglascalhoun').show();
+        });
+
+/*        window.setInterval(function(){
 
           generateRandomTweet();
           displayTweet();
-        }, Math.random() * 30000)
+        }, Math.random() * 60000);*/
 
       });
 

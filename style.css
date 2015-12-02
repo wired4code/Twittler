@@ -20,9 +20,10 @@ body {
 
 #action {
   background-color: lightblue;
-  margin-left: 500px;
-  margin-right: 250px;
+  margin-left: 250px;
+  margin-right: 150px;
   margin-bottom: 25px;
+
 
 }
 
@@ -40,11 +41,15 @@ body {
   color: white;
 }
 
-.tweets{
+.tweetBox, .tweets {
   width: 450px;
   margin-bottom: 10px;
   margin-left: 175px;
   margin-right: 150px;
+}
+
+h3:hover {
+  cursor: pointer;
 }
 
 .user {
@@ -61,4 +66,8 @@ body {
 .time {
   color: gray;
   font-size: 12px;
+}
+
+#individual {
+  display: none;
 }
