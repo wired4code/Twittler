@@ -32,6 +32,12 @@ body {
   font-size: 20px;
   border: 1px solid black;
   border-radius: 5px;
+  outline: none;
+}
+
+.button:hover {
+  background-color: black;
+  color: white;
 }
 
 .tweets{
@@ -52,6 +58,7 @@ body {
 
 }
 
-#messages {
-
+.time {
+  color: gray;
+  font-size: 12px;
 }

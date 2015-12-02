@@ -45,9 +45,11 @@
             var $message = $('<p class="message"></p>');
             $message.text(tweet.message);
             $message.appendTo($tweet);
-        };
 
-        var $body = $('body');
+            var $time = $('<p class="time"></p>');
+            $time.text(tweet.created_at);
+            $time.appendTo($tweet);
+        };
 
         var index = streams.home.length - 1;
         while(index >= 0){
@@ -60,6 +62,12 @@
           generateRandomTweet();
           displayTweet();
         });
+
+        window.setInterval(function(){
+
+          generateRandomTweet();
+          displayTweet();
+        }, Math.random() * 30000)
 
       });
 
