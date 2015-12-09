@@ -13,11 +13,7 @@
 
     <div id="action">
       <button class="button all">All Tweets</button>
-      <button class="button new">New Tweets</button>
-<!--       <button class="button shawn">@shawndrost</button>
-      <button class="button sharks">@sharksforcheap</button>
-      <button class="button mracus">@mracus</button>
-      <button class="button douglas">@douglascalhoun</button> -->
+      <button class="button new"></button>
     </div>
 
     <div class="tweetBox">
@@ -53,7 +49,14 @@
             $message.appendTo($tweet);
 
             var $time = $('<p class="time"></p>');
-            $time.text(tweet.created_at);
+            if(message === 'new'){
+              $time.text(date);
+            }
+
+            else {
+              $time.text(tweet.created_at);
+            }
+
             $time.appendTo($tweet);
         };
 
@@ -63,51 +66,77 @@
             index -= 1;
         }
 
-        var $newTweet = $('.new');
-        $newTweet.on('click', function(){
-          generateRandomTweet();
-          displayTweet();
-          $('.tweets').show();
-        });
-
         var $all = $('.all');
         $all.on('click', function(){
           $('.tweets').show();
+          /*$('.new').show();*/
         });
 
-        //var $mracus = $('.mracus');
+        var showTimeline = function(name){
+          $('.tweets').hide();
+          $(name).show();
+          $('.all').show();
+        }
+
         $('#messages').on('click', '.mracus', function(event){
           event.preventDefault();
-          $('.tweets').hide();
-          $('.mracus').show();
+          showTimeline('.mracus');
         });
 
-        //var $shawn = $('.shawndrost, .shawn');
         $('#messages').on('click', '.shawndrost', function(event){
           event.preventDefault();
-          $('.tweets').hide();
-          $('.shawndrost').show();
+          showTimeline('.shawndrost');
         });
 
-        //var $sharks = $('.sharksforcheap, .sharks');
         $('#messages').on('click', '.sharksforcheap', function(event){
           event.preventDefault();
-          $('.tweets').hide();
-          $('.sharksforcheap').show();
+          showTimeline('.sharksforcheap');
         });
 
-        //var $douglas = $('.douglascalhoun, .douglas');
         $('#messages').on('click', '.douglascalhoun', function(event){
           event.preventDefault();
-          $('.tweets').hide();
-          $('.douglascalhoun').show();
+          showTimeline('.douglascalhoun');
         });
 
-/*        window.setInterval(function(){
+        // random interval to generate new tweets and placed in container
+        // until user clicks to show new tweets
+        window.setInterval(function(){
+          var incoming = {};
+          incoming.tweet = generateRandomTweet;
+          incoming.post = displayTweet;
+          incoming.timeStamp = new Date;
+          container.push(incoming);
+          $('.new').show();
+          $tweetNumber.text(container.length + ' New Tweets');
+        }, Math.random() * 20000)
 
-          generateRandomTweet();
-          displayTweet();
-        }, Math.random() * 60000);*/
+                var date;
+
+        // to display new tweets
+
+        var container = [];
+
+        if(container.length){
+          $('.new').show();
+        }
+
+        var $newTweet = $('.new');
+        $newTweet.on('click', function(){
+          if(container.length){
+            for(var i = 0; i < container.length; i++){
+              container[i].tweet();
+              date = container[i].timeStamp;
+              container[i].post('new');
+              $('.new').hide();
+            }
+
+            container = [];
+          }
+          $('.tweets').show();
+        });
+
+        var $tweetNumber = $('.new');
+        $tweetNumber.text(container.length + ' New Tweets');
 
       });
 

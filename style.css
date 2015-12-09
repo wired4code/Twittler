@@ -34,6 +34,7 @@ body {
   border: 1px solid black;
   border-radius: 5px;
   outline: none;
+  display: none;
 }
 
 .button:hover {
@@ -67,6 +68,11 @@ h3:hover {
   color: gray;
   font-size: 12px;
 }
+
+/*.all
+.new {
+  visibility: none;
+}*/
 
 #individual {
   display: none;
