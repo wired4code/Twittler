@@ -8,17 +8,21 @@
   <body>
 
     <div class="style" id="header">
-      <h1>Twittler</h1>
+      <h1><a href="index.html">Twittler</a></h1>
     </div>
 
     <div id="action">
+      <div id="buttonbox">
       <button class="button all">All Tweets</button>
       <button class="button new"></button>
+      </div>
     </div>
 
     <div class="tweetBox">
       <div id="messages"></div>
     </div>
+
+    <footer><button class="uptop"><a href="#header">Back to top</a></footer>
 
     <script>
 
@@ -35,9 +39,9 @@
               var tweet = streams.home[streams.home.length - 1];
             }
 
-            var $tweet = $('<div></div>');
-            $tweet.addClass('style tweets');
-            $tweet.prependTo('#messages');
+            var $tweet = $('<div class="style tweets"></div>');
+            $tweet.prependTo('#messages').hide().fadeIn();
+            //$tweet.fadeIn();
 
             var $user = $('<h3 class="user"></h3>');
             $user.text('@' + tweet.user);
@@ -68,14 +72,16 @@
 
         var $all = $('.all');
         $all.on('click', function(){
-          $('.tweets').show();
+          $('.tweets').hide()
+          $('.tweets').fadeIn();
+          $('.all').fadeOut();
           /*$('.new').show();*/
         });
 
         var showTimeline = function(name){
           $('.tweets').hide();
-          $(name).show();
-          $('.all').show();
+          $(name).fadeIn('slow');
+          $('.all').fadeIn();
         }
 
         $('#messages').on('click', '.mracus', function(event){
@@ -106,7 +112,7 @@
           incoming.post = displayTweet;
           incoming.timeStamp = new Date;
           container.push(incoming);
-          $('.new').show();
+          $('.new').fadeIn();
           $tweetNumber.text(container.length + ' New Tweets');
         }, Math.random() * 20000)
 
@@ -117,7 +123,7 @@
         var container = [];
 
         if(container.length){
-          $('.new').show();
+          $('.new').fadeIn('slow');
         }
 
         var $newTweet = $('.new');
@@ -127,7 +133,8 @@
               container[i].tweet();
               date = container[i].timeStamp;
               container[i].post('new');
-              $('.new').hide();
+              $('.new').fadeOut();
+              $('.all').fadeOut();
             }
 
             container = [];
