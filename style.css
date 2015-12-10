@@ -47,7 +47,6 @@ a {
   border: 1px solid black;
   border-radius: 5px;
   outline: none;
-  display: none;
 }
 
 .button:hover {
@@ -63,14 +62,12 @@ a {
   margin-top: 25px;
 }
 
+h3 {
+  color: red;
+}
 
 h3:hover {
   cursor: pointer;
-}
-
-.user {
-
-  color: red;
 }
 
 .message {

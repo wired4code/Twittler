@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="jquery.timeago.js"></script>
   </head>
   <body>
 
@@ -13,7 +14,7 @@
 
     <div id="action">
       <div id="buttonbox">
-      <button class="button all">All Tweets</button>
+      <button class="button all">Return to All Tweets</button>
       <button class="button new"></button>
       </div>
     </div>
@@ -28,122 +29,105 @@
 
       $(document).ready(function(){
 
-        var displayTweet = function(message){
-            var tweet;
-            if(message === 'original'){
-              tweet = streams.home[index];
-            }
+        var newTweets, added, original;
 
-            else{
+        var displayTweet = function(user){
 
-              var tweet = streams.home[streams.home.length - 1];
-            }
+            var tweet, index;
 
-            var $tweet = $('<div class="style tweets"></div>');
-            $tweet.prependTo('#messages').hide().fadeIn();
-            $tweet.fadeIn();
+            if(user) {
 
-            var $user = $('<h3 class="user"></h3>');
-            $user.text('@' + tweet.user);
-            $user.appendTo($tweet);
-            $tweet.addClass(tweet.user.toString());
-
-            var $message = $('<p class="message"></p>');
-            $message.text(tweet.message);
-            $message.appendTo($tweet);
-
-            var $time = $('<p class="time"></p>');
-            if(message === 'new'){
-              $time.text(date);
+              index = streams.users[user].length - 1;
             }
 
             else {
-              $time.text(tweet.created_at);
+              index = streams.home.length - 1;
             }
 
-            $time.appendTo($tweet);
+            original = index;
+
+            while(index >= 0){
+
+                if(user){
+                  tweet = streams.users[user][index];
+                }
+
+                else {
+                  tweet = streams.home[index];
+                }
+
+                var $tweet = $('<div class="style tweets"></div>');
+                $tweet.appendTo('#messages').hide().fadeIn();
+                $tweet.fadeIn();
+
+                var $user = $('<h3></h3>');
+                $user.text('@' + tweet.user);
+                $user.appendTo($tweet);
+                $user.addClass(tweet.user.toString());
+
+                var $message = $('<p class="message"></p>');
+                $message.text(tweet.message);
+                $message.appendTo($tweet);
+
+                var $time = $('<p class="time"></p>');
+                $time.text(jQuery.timeago(tweet.created_at));
+                $time.appendTo($tweet);
+
+                index -=1;
+
+            }
+
+            if(user){
+              $all.fadeIn();
+            }
+
+            original = streams.home.length - 1;
+
         };
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-            displayTweet('original');
-            index -= 1;
-        }
+        var checkNewTweets = function(){
+          setInterval(function(){
+            added = streams.home.length - 1;
+            if(added > original){
+              newTweets = added - original;
+              $('.new').fadeIn('slow');
+              $tweetNumber.text(newTweets + ' New Tweets');
+            }
+            console.log(added, original);
+          }, 7000);
+        };
+
+        $('.all').hide();
+        $('.new').hide();
+        displayTweet();
+        checkNewTweets();
+
 
         var $all = $('.all');
         $all.on('click', function(){
-          $('.tweets').hide()
-          $('.tweets').fadeIn();
-          $('.all').fadeOut();
-          /*$('.new').show();*/
-        });
-
-        var showTimeline = function(name){
           $('.tweets').hide();
-          $(name).fadeIn('slow');
-          $('.all').fadeIn();
-        }
-
-        $('#messages').on('click', '.mracus', function(event){
-          event.preventDefault();
-          showTimeline('.mracus');
-        });
-
-        $('#messages').on('click', '.shawndrost', function(event){
-          event.preventDefault();
-          showTimeline('.shawndrost');
-        });
-
-        $('#messages').on('click', '.sharksforcheap', function(event){
-          event.preventDefault();
-          showTimeline('.sharksforcheap');
-        });
-
-        $('#messages').on('click', '.douglascalhoun', function(event){
-          event.preventDefault();
-          showTimeline('.douglascalhoun');
-        });
-
-        // random interval to generate new tweets and placed in container
-        // until user clicks to show new tweets
-        window.setInterval(function(){
-          var incoming = {};
-          incoming.tweet = generateRandomTweet;
-          incoming.post = displayTweet;
-          incoming.timeStamp = new Date();
-          container.push(incoming);
-          $('.new').fadeIn();
-          $tweetNumber.text(container.length + ' New Tweets');
-        }, Math.random() * 20000)
-
-                var date;
-
-        // to display new tweets
-
-        var container = [];
-
-        if(container.length){
-          $('.new').fadeIn('slow');
-        }
-
-        var $newTweet = $('.new');
-        $newTweet.on('click', function(){
-          if(container.length){
-            for(var i = 0; i < container.length; i++){
-              container[i].tweet();
-              date = container[i].timeStamp;
-              container[i].post('new');
-              $('.new').fadeOut();
-              $('.all').fadeOut();
-            }
-
-            container = [];
-          }
-          $('.tweets').show();
+          $('.all').fadeOut();
+          displayTweet();
+          checkNewTweets();
         });
 
         var $tweetNumber = $('.new');
-        $tweetNumber.text(container.length + ' New Tweets');
+        $tweetNumber.on('click', function(){
+          $('.new').hide();
+          $('.tweets').hide();
+          clearInterval(checkNewTweets);
+          displayTweet();
+          checkNewTweets();
+        });
+
+        $('#messages').on('click', 'h3', function(event){
+          event.preventDefault();
+          var userClass = this.getAttribute('class');
+          clearInterval(checkNewTweets);
+          $('.new').hide();
+          $('.tweets').remove();
+          displayTweet(userClass);
+        });
 
       });
 
