@@ -77,9 +77,9 @@
 
             }
 
-            if(user){
+/*            if(user){
               $all.fadeIn();
-            }
+            }*/
 
             original = streams.home.length - 1;
 
@@ -114,6 +114,7 @@
         var $tweetNumber = $('.new');
         $tweetNumber.on('click', function(){
           $('.new').hide();
+          $('.all').hide();
           $('.tweets').hide();
           clearInterval(checkNewTweets);
           displayTweet();
@@ -124,7 +125,8 @@
           event.preventDefault();
           var userClass = this.getAttribute('class');
           clearInterval(checkNewTweets);
-          $('.new').hide();
+          $('.all').fadeIn();
+          $('.new').remove();
           $('.tweets').remove();
           displayTweet(userClass);
         });
