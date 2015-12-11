@@ -12,6 +12,16 @@
       <h1><a href="index.html">Twittler</a></h1>
     </div>
 
+    <div id="visitor">
+      <form type="text" class="form">
+        <fieldset>
+          <legend>Post a Tweet</legend>
+          <textarea maxlength="140" rows="5" cols="25"></textarea>
+          <button type="submit" class="post">Post Tweet</button>
+        </fieldset>
+      </form>
+    </div>
+
     <div id="action">
       <div id="buttonbox">
       <button class="button all">Return to All Tweets</button>
@@ -37,7 +47,12 @@
 
             if(user) {
 
-              index = streams.users[user].length - 1;
+              if(user === 'anonymous') {
+                index = container.length - 1;
+              }
+              else {
+                index = streams.users[user].length - 1;
+              }
             }
 
             else {
@@ -48,8 +63,14 @@
 
             while(index >= 0){
 
-                if(user){
-                  tweet = streams.users[user][index];
+                if(user) {
+
+                  if(user === 'anonymous') {
+                    tweet = container[index];
+                  }
+                  else {
+                    tweet = streams.users[user][index];
+                  }
                 }
 
                 else {
@@ -138,6 +159,18 @@
           checkNewTweets('hide');
 
         });
+
+        $('.post').on('click', function(){
+          var message = $('textarea').val();
+          $('.tweets').fadeOut();
+          console.log(message);
+          writeTweet(message);
+          $('textarea').val('');
+          console.log(streams.home)
+          userClass = 'anonymous';
+          displayTweet('anonymous');
+          $('.all').fadeIn();
+        })
 
       });
 

@@ -52,7 +52,7 @@ for(var i = 0; i < 10; i++){
 
 var scheduleNextTweet = function(){
   generateRandomTweet();
-  setTimeout(scheduleNextTweet, Math.random() * 1500);
+  setTimeout(scheduleNextTweet, Math.random() * 3000);
 };
 scheduleNextTweet();
 
@@ -63,7 +63,18 @@ var writeTweet = function(message){
     throw new Error('set the global visitor property!');
   }
   var tweet = {};
-  tweet.user = visitor;
+  tweet.user = 'anonymous';
   tweet.message = message;
-  addTweet(tweet);
+  tweet.created_at = new Date();
+  addAnonymousTweet(tweet);
 };
+
+var container = [];
+
+var addAnonymousTweet = function(newTweet){
+  var username = newTweet.user;
+  //streams.users[visitor].push(newTweet); maybe have to create this
+  streams.home.push(newTweet);
+  container.push(newTweet);
+};
+

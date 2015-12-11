@@ -20,11 +20,20 @@ body {
 
 #action {
   background-color: lightblue;
-  margin-left: 350px;
+  margin-left: 500px;
   margin-right: 150px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
 
+#visitor {
+  margin-left: 100px;
+  width: 300px;
+  background-color: lightblue;
+  display: inline-block;
+}
 
+.form {
 }
 
 .uptop {
@@ -58,9 +67,9 @@ a {
 .tweetBox, .tweets {
   width: 450px;
   margin-bottom: 10px;
-  margin-left: 175px;
+  margin-left: 250px;
   margin-right: 150px;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 h3 {
