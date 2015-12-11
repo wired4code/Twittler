@@ -16,7 +16,7 @@
       <form type="text" class="form">
         <fieldset>
           <legend>Post a Tweet</legend>
-          <textarea maxlength="140" rows="5" cols="25"></textarea>
+          <textarea maxlength="140" rows="5" cols="25" required></textarea>
           <button type="submit" class="post">Post Tweet</button>
         </fieldset>
       </form>
@@ -162,6 +162,11 @@
 
         $('.post').on('click', function(){
           var message = $('textarea').val();
+          if(message){
+
+
+          status = 'hide';
+          $('.new').hide();
           $('.tweets').fadeOut();
           console.log(message);
           writeTweet(message);
@@ -169,7 +174,9 @@
           console.log(streams.home)
           userClass = 'anonymous';
           displayTweet('anonymous');
+          checkNewTweets('hide');
           $('.all').fadeIn();
+        }
         })
 
       });
