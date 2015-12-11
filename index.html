@@ -77,58 +77,66 @@
 
             }
 
-/*            if(user){
-              $all.fadeIn();
-            }*/
-
             original = streams.home.length - 1;
 
         };
 
-        var checkNewTweets = function(){
-          setInterval(function(){
+
+        var display = 'show';
+
+        var checkNewTweets = function(show){
+          display = show;
+          window.setInterval(function(){
             added = streams.home.length - 1;
             if(added > original){
               newTweets = added - original;
-              $('.new').fadeIn('slow');
-              $tweetNumber.text(newTweets + ' New Tweets');
+              if(display === 'show'){
+                $('.new').fadeIn('slow');
+                $tweetNumber.text(newTweets + ' New Tweets');
+              }
             }
             console.log(added, original);
           }, 7000);
-        };
+        }
 
-        $('.all').hide();
-        $('.new').hide();
+
+        // ====== on page reload, application starts here ====
+
         displayTweet();
-        checkNewTweets();
+        checkNewTweets('show');
 
 
+      // ================== event handlers ===============
         var $all = $('.all');
+        var $tweetNumber = $('.new');
+
         $all.on('click', function(){
           $('.tweets').hide();
           $('.all').fadeOut();
-          displayTweet();
-          checkNewTweets();
-        });
-
-        var $tweetNumber = $('.new');
-        $tweetNumber.on('click', function(){
-          $('.new').hide();
-          $('.all').hide();
-          $('.tweets').hide();
           clearInterval(checkNewTweets);
           displayTweet();
-          checkNewTweets();
+          checkNewTweets('show');
+        });
+
+        $tweetNumber.on('click', function(){
+          $('.new').fadeOut();
+          //$('.all').hide();
+          $('.tweets').hide();
+          //window.clearInterval();
+          displayTweet();
+          checkNewTweets('show');
         });
 
         $('#messages').on('click', 'h3', function(event){
           event.preventDefault();
           var userClass = this.getAttribute('class');
-          clearInterval(checkNewTweets);
+          status = 'hide';
+          $('.new').hide();
           $('.all').fadeIn();
-          $('.new').remove();
-          $('.tweets').remove();
+          $('.tweets').fadeOut();
           displayTweet(userClass);
+          checkNewTweets('hide');
+
         });
 
       });
